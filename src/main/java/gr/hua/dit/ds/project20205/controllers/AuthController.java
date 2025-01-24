@@ -1,12 +1,10 @@
 package gr.hua.dit.ds.project20205.controllers;
-
-import ch.qos.logback.core.model.Model;
 import gr.hua.dit.ds.project20205.entities.Role;
 import gr.hua.dit.ds.project20205.repositories.RoleRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+
 
 @Controller
 public class AuthController {

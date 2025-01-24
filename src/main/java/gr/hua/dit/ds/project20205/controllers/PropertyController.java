@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
+
 @Controller
 @RequestMapping("/properties") // Κοινό path για όλα τα endpoints
 public class PropertyController {
@@ -41,10 +42,10 @@ public class PropertyController {
         model.addAttribute("message", "The property was added successfully and is pending approval!");
         return "redirect:/properties/thank-you"; // Επιστροφή στη λίστα ακινήτων
     }
-@GetMapping("/thank-you")
-public String thankYouPage() {
-    return "properties/thank-you"; // Σημείωση: Αυτό αντιστοιχεί στο properties/thank-you.html
-}
+    @GetMapping("/thank-you")
+    public String thankYouPage() {
+        return "properties/thank-you"; // Σημείωση: Αυτό αντιστοιχεί στο properties/thank-you.html
+    }
 
     // Προβολή λεπτομερειών ακινήτου
     @GetMapping("/details/{id}")
@@ -55,7 +56,7 @@ public String thankYouPage() {
         return "properties/details"; // Συνδέεται με το templates/properties/details.html
     }
 
-  // Αναζήτηση ακινήτων με φίλτρα
+    // Αναζήτηση ακινήτων με φίλτρα
     @GetMapping("/search")
     public String searchProperties(
             @RequestParam(required = false) Integer minPrice,
@@ -99,7 +100,6 @@ public String thankYouPage() {
         model.addAttribute("properties", properties);
         return "properties/list";
     }
-
 //    @GetMapping("/applications/{propertyId}")
 //    public String viewApplicationsByPropertyId(@PathVariable Long propertyId, Model model) {
 //        List<RentalApplication> applications = rentalApplicationService.getApplicationsByPropertyId(propertyId);
