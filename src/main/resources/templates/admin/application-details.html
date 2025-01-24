@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/cover.css">
+    <script src="/js/jquery-slim.min.js"></script>
+    <script src="/js/popper.min.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Application Details</title>
+</head>
+<body>
+<h1>Application Details</h1>
+<p><strong>Application ID:</strong> <span th:text="${application.id}"></span></p>
+<p><strong>Applicant Name:</strong> <span th:text="${application.name}"></span></p>
+<p><strong>Property ID:</strong> <span th:text="${application.property.id}"></span></p>
+<p><strong>Status:</strong> <span th:text="${application.status}"></span></p>
+</body>
+</html>
