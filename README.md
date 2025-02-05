@@ -20,7 +20,9 @@ docker run --name ds-lab-pg --rm \
 Fix database connection in application.properties
 
 spring.datasource.url=jdbc:postgresql://localhost:5432/students
+
 spring.datasource.username=dbuser
+
 spring.datasource.password=pass123
 
 Run the project: 
