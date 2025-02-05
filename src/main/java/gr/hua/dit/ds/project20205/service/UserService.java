@@ -1,5 +1,4 @@
 package gr.hua.dit.ds.project20205.service;
-
 import gr.hua.dit.ds.project20205.entities.Role;
 import gr.hua.dit.ds.project20205.entities.User;
 import gr.hua.dit.ds.project20205.repositories.RoleRepository;
@@ -37,7 +36,7 @@ public class UserService implements UserDetailsService {
         String encodedPassword = passwordEncoder.encode(passwd);
         user.setPassword(encodedPassword);
 
-        Role role = roleRepository.findByName("ROLE_USER")
+        Role role = roleRepository.findByName("ROLE_RENTAL")
                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
         Set<Role> roles = new HashSet<>();
         roles.add(role);
@@ -52,6 +51,7 @@ public class UserService implements UserDetailsService {
         user = userRepository.save(user);
         return user.getId();
     }
+
 
     @Override
     @Transactional
@@ -78,10 +78,6 @@ public class UserService implements UserDetailsService {
         return userRepository.findAll();
     }
 
-    public Object getUser(Long userId) {
-        return userRepository.findById(userId).get();
-    }
-
     @Transactional
 
     public void updateOrInsertRole(Role role) {
@@ -93,5 +89,8 @@ public class UserService implements UserDetailsService {
         userRepository.deleteById(userId);
     }
 
+    public User getUser(Long userId) {
+        return userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+    }
 
 }

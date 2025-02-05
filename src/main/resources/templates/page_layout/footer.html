@@ -4,11 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
 </head>
 <body>
 
 <footer class="mastfoot mt-auto" th:fragment="header">
     <div class="inner">
+        <link rel="stylesheet" th:href="@{/css/style.css}">
         <div sec:authorize="isAuthenticated()">
             Authenticated username:
             <span sec:authentication="name"></span>

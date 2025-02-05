@@ -6,6 +6,10 @@ import gr.hua.dit.ds.project20205.service.RentalApplicationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 @Controller
@@ -39,6 +43,7 @@ public class AdminController {
         model.addAttribute("pendingProperties", propertyService.getPropertiesByStatus(Property.Status.PENDING));
         return "admin/pending-properties"; // Συνδέεται με το pending-properties.html
     }
+
     // Έγκριση ακινήτου
     @PostMapping("/approve/{id}")
     public String approveProperty(@PathVariable Long id) {
@@ -53,32 +58,89 @@ public class AdminController {
         return "redirect:/admin/pending-properties";
     }
 
-    // Διαχείριση εγκεκριμένων ακινήτων
-    @GetMapping("/manage-properties")
-    public String manageProperties(Model model) {
-        model.addAttribute("properties", propertyService.getAllProperties());
-        return "admin/manage-properties"; // Συνδέεται με το manage-properties.html
-    }
-
     // Διαχείριση χρηστών
-    @GetMapping("/manage-users")
+    @GetMapping("/auth/users")
     public String manageUsers(Model model) {
         model.addAttribute("users", userService.getUsers());
-        return "admin/manage-users"; // Συνδέεται με το manage-users.html
+        return "auth/users";
     }
 
     // Διαγραφή χρήστη
     @PostMapping("/delete-user/{id}")
     public String deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
-        return "redirect:/admin/manage-users";
+        return "redirect:/auth/users";
     }
-    // Διαγραφή ακινήτου
+
     @PostMapping("/delete-property/{id}")
-    public String deleteProperty(@PathVariable Long id) {
+    public String deleteProperty(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        if (rentalApplicationService.hasActiveApplication(id)) {
+            redirectAttributes.addFlashAttribute("error", "There is an active application for this property. You must reject the application first!");
+            return "redirect:/admin/manage-properties";
+        }
+
         propertyService.deleteProperty(id);
         return "redirect:/admin/manage-properties";
     }
 
+    @GetMapping("/manage-properties")
+    public String manageProperties(Model model) {
+        List<Property> properties = propertyService.getApprovedProperties();
+        Map<Long, Boolean> activeApplicationsMap = new HashMap<>();
+
+        for (Property property : properties) {
+            boolean hasActiveApplication = rentalApplicationService.hasActiveApplication(property.getId());
+            activeApplicationsMap.put(property.getId(), hasActiveApplication);
+        }
+
+        model.addAttribute("properties", properties);
+        model.addAttribute("activeApplicationsMap", activeApplicationsMap);
+        return "admin/manage-properties";
+    }
+
+    // Προβολή της φόρμας επεξεργασίας για ένα ακίνητο
+    @GetMapping("/edit-property/{id}")
+    public String showEditProperty(@PathVariable Long id, Model model) {
+        Property property = propertyService.getPropertyById(id);
+        if (property == null) {
+            return "error/404"; // Αν το property δεν βρεθεί, επιστρέφουμε error page
+        }
+        model.addAttribute("property", property);
+        return "admin/edit-property"; // ΕΠΙΣΤΡΟΦΗ στο admin/edit-property.html
+    }
+
+    // Αποθήκευση αλλαγών στο ακίνητο
+    @PostMapping("/edit-property/{id}")
+    public String saveEditedProperty(@PathVariable Long id, @ModelAttribute("property") Property property, Model model) {
+        Property existingProperty = propertyService.getPropertyById(id);
+        if (existingProperty == null) {
+            return "error/404";
+        }
+
+        // Ενημερώνουμε όλα τα πεδία του ακινήτου
+        existingProperty.setTitle(property.getTitle());
+        existingProperty.setAddress(property.getAddress());
+        existingProperty.setPrice(property.getPrice());
+        existingProperty.setRooms(property.getRooms());
+        existingProperty.setBathrooms(property.getBathrooms());
+        existingProperty.setSquareMeters(property.getSquareMeters());
+        existingProperty.setConstructionYear(property.getConstructionYear());
+        existingProperty.setPropertyType(property.getPropertyType());
+        existingProperty.setHasGarden(property.isHasGarden());
+        existingProperty.setHasBalcony(property.isHasBalcony());
+        existingProperty.setHasStorage(property.isHasStorage());
+        existingProperty.setHasParking(property.isHasParking());
+
+        // Αποθήκευση των αλλαγών
+        propertyService.updateProperty(existingProperty);
+
+        return "redirect:/admin/manage-properties"; // Επιστροφή στη λίστα
+    }
 }
+
+
+
+
+
+
 

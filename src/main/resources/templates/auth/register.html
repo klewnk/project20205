@@ -16,7 +16,7 @@
     <h3>User Registration</h3>
     <form th:action="@{/saveUser}" method="post" th:object="${user}">
         <div class="form-group row">
-            <label for="name"> User Name</label>
+            <label for="username"> User Name</label>
 
             <input type="text" class="form-control" th:field="*{username}" id="username"/>
 

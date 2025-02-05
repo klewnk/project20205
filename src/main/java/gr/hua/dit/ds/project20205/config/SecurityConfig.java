@@ -33,19 +33,21 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                                .requestMatchers("/", "/home", "/register", "/saveUser", "/images/**", "/js/**", "/css/**").permitAll()
-                       .requestMatchers("/admin/admin-dashboard/**").hasRole("ADMIN")
-                        .requestMatchers("/properties.add/**").hasRole("OWNER")
-                      //  .requestMatchers("/properties/**").authenticated()
-                                .anyRequest().authenticated()
+                        .requestMatchers("/", "/home", "/register", "/saveUser", "/images/**", "/js/**", "/css/**").permitAll()
+                        .requestMatchers("/admin/admin-dashboard/**", "/users/**").hasRole("ADMIN") // Μόνο για ADMIN
+                        .requestMatchers("/applications/**", "/properties/add/**").hasAnyRole("ADMIN", "OWNER") // Για ADMIN & OWNER
+                        .requestMatchers("/properties/**").hasAnyRole("RENTAL", "OWNER", "ADMIN") // Για RENTAL, OWNER, ADMIN
+                        .anyRequest().authenticated() // Όλα τα άλλα χρειάζονται authentication
                 )
                 .formLogin((form) -> form
                         .loginPage("/login")
                         .defaultSuccessUrl("/", true)
                         .permitAll())
                 .logout((logout) -> logout.permitAll());
+
         return http.build();
     }
+
 
 }
 

@@ -1,16 +1,15 @@
 package gr.hua.dit.ds.project20205.service;
-
 import gr.hua.dit.ds.project20205.entities.RentalApplication;
 import gr.hua.dit.ds.project20205.repositories.RentalApplicationRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import gr.hua.dit.ds.project20205.entities.Property;
-import gr.hua.dit.ds.project20205.entities.RentalApplication;
 import gr.hua.dit.ds.project20205.repositories.PropertyRepository;
 import java.util.List;
 
 @Service
 public class RentalApplicationService {
-
+    @Autowired
     private final RentalApplicationRepository rentalApplicationRepository;
     private final PropertyRepository propertyRepository;
 
@@ -26,6 +25,10 @@ public class RentalApplicationService {
                 .orElseThrow(() -> new IllegalArgumentException("Application not found with ID: " + id));
     }
 
+
+    public void saveApplication(RentalApplication application) {
+        rentalApplicationRepository.save(application);
+    }
     public List<RentalApplication> getAllApplications() {
         return rentalApplicationRepository.findAll();
     }
@@ -39,6 +42,10 @@ public class RentalApplicationService {
 
     public void deleteApplication(Long id) {
         rentalApplicationRepository.deleteById(id);
+    }
+
+    public boolean hasActiveApplication(Long propertyId) {
+        return rentalApplicationRepository.existsByPropertyId(propertyId);
     }
 }
 

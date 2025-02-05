@@ -6,11 +6,16 @@
 
 <head>
   <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8">
+    <title>User Management</title>
+    <link rel="stylesheet" href="/css/style2.css">
+  </head>
+
   <title>Login</title>
 </head>
 <body>
 <div layout:fragment="main-content">
-
   <div th:if="${ not#lists.isEmpty(users)}">
     <table class="table">
       <thead>
@@ -32,6 +37,9 @@
                         <a  class="btn btn-success" th:href="@{/user/role/add/{id}/{role_id}(id=${user.id},role_id=${role.id})}" th:if="${! user.roles.contains(role)}" th:utext="'Add ' + ${role.name}"></a>
 
                     </span>
+          <form th:action="@{/admin/delete-user/{id}(id=${user.id})}" method="post">
+            <button type="submit" class="btn btn-danger btn-sm">Delete User</button>
+          </form>
         </td>
 
       </tr>
@@ -39,7 +47,7 @@
     </table>
   </div>
   <div th:if="${ #lists.isEmpty(users)}">
-    No Students found!
+    No User found!
   </div>
   <a href="/register" class="btn btn-primary" role="button">Create new User</a>
 

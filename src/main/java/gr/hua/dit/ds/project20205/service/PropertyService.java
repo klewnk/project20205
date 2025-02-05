@@ -126,6 +126,9 @@ public class PropertyService {
     }
     // Διαγραφή ακινήτου
     @Transactional
+    public void updateProperty(Property property) {
+        propertyRepository.save(property);
+    }
     public void deleteProperty(Long id) {
         propertyRepository.deleteById(id);
     }

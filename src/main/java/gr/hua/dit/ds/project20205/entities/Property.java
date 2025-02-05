@@ -1,5 +1,4 @@
 package gr.hua.dit.ds.project20205.entities;
-
 import jakarta.persistence.*;
 
 

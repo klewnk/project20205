@@ -7,11 +7,13 @@
 <body>
 <div class="container mt-5">
     <h1>Rental Application</h1>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
     <p>Apply for property: <strong th:text="${property.title}"></strong></p>
 
-    <form th:action="@{/properties/apply}" method="post">
-        <!-- Hidden field for property ID -->
-        <input type="hidden" name="propertyId" th:value="${property.id}" />
+    <form th:action="@{/apply}" method="post" onsubmit="return validatePhoneNumber()">
+
+        <input type="hidden" name="propertyId" th:value="${property.id}">
 
         <div class="mb-3">
             <label for="firstName" class="form-label">First Name</label>
@@ -30,12 +32,33 @@
 
         <div class="mb-3">
             <label for="phone" class="form-label">Phone</label>
-            <input type="text" name="phone" class="form-control" id="phone" required>
+            <div class="input-group">
+                <span class="input-group-text">+30</span>
+                <input type="text" name="phone" class="form-control" id="phone" maxlength="10" required
+                       pattern="\d{10}" title="The phone number must be exactly 10 digits long.">
+            </div>
+            <small class="text-danger" id="phoneError" style="display:none;">The phone number must be exactly 10 digits long.</small>
         </div>
 
         <button type="submit" class="btn btn-primary">Submit Application</button>
     </form>
 </div>
+
+<script>
+    function validatePhoneNumber() {
+        const phoneInput = document.getElementById("phone");
+        const phoneError = document.getElementById("phoneError");
+        const phoneNumber = phoneInput.value;
+
+        if (!/^\d{10}$/.test(phoneNumber)) {
+            phoneError.style.display = "block";
+            return false; // Αποτρέπει την υποβολή της φόρμας
+        }
+        phoneError.style.display = "none";
+        return true;
+    }
+</script>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

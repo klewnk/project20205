@@ -2,8 +2,6 @@ package gr.hua.dit.ds.project20205.entities;
 
 import jakarta.persistence.*;
 
-// Η κλάση RentalApplication αντιπροσωπεύει μια αίτηση ενοικίασης από ενδιαφερόμενο ενοικιαστή.
-
 @Entity
 @Table(name = "rental_application")
 public class RentalApplication {
@@ -31,9 +29,10 @@ public class RentalApplication {
 
     // Συσχέτιση της αίτησης με ένα ακίνητο.
     // Το πεδίο αυτό αντιπροσωπεύει το ακίνητο για το οποίο υποβλήθηκε η αίτηση.
-    @ManyToOne(fetch = FetchType.LAZY) // Η σχέση είναι "πολλά προς ένα" με το ακίνητο.
-    @JoinColumn(name = "property_id", referencedColumnName = "id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "property_id", referencedColumnName = "id", nullable = true)
     private Property property;
+
 
     // Getters και Setters για κάθε πεδίο.
 
@@ -85,16 +84,15 @@ public class RentalApplication {
         this.property = property;
     }
 
-    // ToString μέθοδος για debugging και ευκολία εμφάνισης δεδομένων.
-    @Override
-    public String toString() {
-        return "RentalApplication{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", phone='" + phone + '\'' +
-                ", property=" + (property != null ? property.getId() : null) +
-                '}';
-    }
+@Override
+public String toString() {
+    return "RentalApplication{" +
+            "id=" + id +
+            ", firstName='" + firstName + '\'' +
+            ", lastName='" + lastName + '\'' +
+            ", email='" + email + '\'' +
+            ", phone='" + phone + '\'' +
+            ", property=" + (property != null ? property.getId() : "N/A") +
+            '}';
+}
 }
