@@ -23,5 +23,5 @@ spring.datasource.url=jdbc:postgresql://localhost:5432/students
 spring.datasource.username=dbuser
 spring.datasource.password=pass123
 
-Run the project
+Run the project: 
 mvn spring-boot:run
