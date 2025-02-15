@@ -9,11 +9,9 @@ public class Property {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String title; // Τίτλος (π.χ. "Διαμέρισμα", "Μεζονέτα")
     private String address;
     private double price;
-
     private int rooms; // Αριθμός δωματίων
     private int bathrooms; // Αριθμός τουαλετών
     private double squareMeters; // Τετραγωνικά μέτρα
@@ -22,7 +20,6 @@ public class Property {
     private boolean hasBalcony; // Μπαλκόνι
     private boolean hasStorage; // Αποθήκη
     private boolean hasParking; // Ιδιωτική θέση στάθμευσης
-
     private String propertyType; // Τύπος ακινήτου: "Μονοκατοικία", "Διαμέρισμα", "Βίλα"
     private String description; // Περιγραφή ακινήτου
 
@@ -172,7 +169,10 @@ public class Property {
         return description;
     }
 
+
     public void setDescription(String description) {
         this.description = description;
     }
+
+
 }

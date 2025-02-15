@@ -4,6 +4,7 @@ import gr.hua.dit.ds.project20205.entities.User;
 import gr.hua.dit.ds.project20205.repositories.RoleRepository;
 import gr.hua.dit.ds.project20205.repositories.UserRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -28,6 +29,7 @@ public class UserService implements UserDetailsService {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
+
     }
 
     @Transactional
@@ -92,5 +94,4 @@ public class UserService implements UserDetailsService {
     public User getUser(Long userId) {
         return userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
     }
-
 }

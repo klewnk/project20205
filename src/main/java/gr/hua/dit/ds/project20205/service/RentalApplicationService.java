@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import gr.hua.dit.ds.project20205.entities.Property;
 import gr.hua.dit.ds.project20205.repositories.PropertyRepository;
 import java.util.List;
+import gr.hua.dit.ds.project20205.entities.User;
 
 @Service
 public class RentalApplicationService {
@@ -48,5 +49,4 @@ public class RentalApplicationService {
         return rentalApplicationRepository.existsByPropertyId(propertyId);
     }
 }
-
 

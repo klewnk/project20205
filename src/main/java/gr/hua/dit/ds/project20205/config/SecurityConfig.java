@@ -36,6 +36,7 @@ public class SecurityConfig {
                         .requestMatchers("/", "/home", "/register", "/saveUser", "/images/**", "/js/**", "/css/**").permitAll()
                         .requestMatchers("/admin/admin-dashboard/**", "/users/**").hasRole("ADMIN") // Μόνο για ADMIN
                         .requestMatchers("/applications/**", "/properties/add/**").hasAnyRole("ADMIN", "OWNER") // Για ADMIN & OWNER
+                        .requestMatchers("/properties/apply/**").hasAnyRole("RENTAL", "OWNER")
                         .requestMatchers("/properties/**").hasAnyRole("RENTAL", "OWNER", "ADMIN") // Για RENTAL, OWNER, ADMIN
                         .anyRequest().authenticated() // Όλα τα άλλα χρειάζονται authentication
                 )
@@ -50,6 +51,4 @@ public class SecurityConfig {
 
 
 }
-
-
 

@@ -1,20 +1,20 @@
 .container {
-    max-width: 1100px; /* Αύξησε το πλάτος για να φαίνεται μεγαλύτερο */
+    max-width: 1100px;
     margin: auto;
-    padding: 20px; /* Πρόσθεσε padding για καλύτερη εμφάνιση */
+    padding: 20px;
 }
 
 .table {
-    border-radius: 12px; /* Στρογγυλεμένες άκρες */
+    border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15); /* Προσθήκη σκιάς για καλύτερη εμφάνιση */
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
     background: white;
     border-collapse: separate;
     border-spacing: 0;
 }
 
 .table th {
-    background-color: #222; /* Πιο σκούρο χρώμα για αντίθεση */
+    background-color: #222;
     color: white;
     font-size: 18px;
     padding: 12px;

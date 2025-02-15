@@ -1,6 +1,7 @@
 package gr.hua.dit.ds.project20205.controllers;
 import gr.hua.dit.ds.project20205.entities.RentalApplication;
 import gr.hua.dit.ds.project20205.service.RentalApplicationService;
+import gr.hua.dit.ds.project20205.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +16,11 @@ public class RentalApplicationController {
     @Autowired  // 🟢 Προσθήκη αυτής της γραμμής
     public RentalApplicationController(RentalApplicationService rentalApplicationService) {
         this.rentalApplicationService = rentalApplicationService;
+        this.userService = userService;
     }
+    @Autowired
+    private UserService userService;
+
 
     @PostMapping("/apply")
     public String submitApplication(@RequestParam Long propertyId, @ModelAttribute RentalApplication application, Model model) {
@@ -49,4 +54,5 @@ public class RentalApplicationController {
         model.addAttribute("applications", applications);
         return "properties/applications";
     }
+
 }

@@ -1,5 +1,6 @@
 package gr.hua.dit.ds.project20205.repositories;
 import gr.hua.dit.ds.project20205.entities.RentalApplication;
+import gr.hua.dit.ds.project20205.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
