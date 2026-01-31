@@ -1,4 +1,4 @@
-Clone project
+Clone project:
 
 git clone https://github.com/klewnk/project20205.git
 
