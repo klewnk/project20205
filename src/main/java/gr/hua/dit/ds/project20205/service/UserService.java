@@ -15,8 +15,12 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 
+
 @Service
 public class UserService implements UserDetailsService {
+
+    @Autowired 
+    private EmailService emailService;
 
 
     private UserRepository userRepository;
@@ -44,7 +48,16 @@ public class UserService implements UserDetailsService {
         roles.add(role);
         user.setRoles(roles);
 
-        user = userRepository.save(user);
+        User savedUser = userRepository.save(user);
+        //  ΑΠΟΣΤΟΛΗ EMAIL 
+      try {
+        emailService.sendWelcomeEmail(savedUser.getEmail(), savedUser.getUsername());
+        System.out.println("Email sent to: " + savedUser.getEmail());
+     } catch (Exception e) {
+        // Καταγράφουμε το σφάλμα αλλά δεν σταματάμε την εγγραφή
+        System.err.println("Could not send email: " + e.getMessage());
+     }
+
         return user.getId();
     }
 
